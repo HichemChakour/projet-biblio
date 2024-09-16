@@ -12,7 +12,7 @@ public class Triangle {
     }
 
     public double surface() {
-        double base = p1.distance(p2);  
+        double base = p1.distance(p2);
 
 
         double hauteur = Math.abs((p2.getY() - p1.getY()) * p3.getX() - (p2.getX() - p1.getX()) * p3.getY() + p2.getX() * p1.getY() - p2.getY() * p1.getX()) /
