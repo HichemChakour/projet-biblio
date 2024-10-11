@@ -1,6 +1,6 @@
 package org.example;
 
-public class Rectangle {
+public class Quadrilatere {
 
     // Variables pour les côtés
     private Point p1;
@@ -8,24 +8,11 @@ public class Rectangle {
     private Point p3;
     private Point p4;
 
-    // Constructeur
-    public Rectangle(Point p1, Point p2, Point p3) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
-        this.p4 = calculerPointQuatre(p1, p2, p3);
-    }
-
-    public Rectangle(Point p1, Point p2, Point p3, Point p4) {
+    public Quadrilatere(Point p1, Point p2, Point p3, Point p4) {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
         this.p4 = p4;
-    }
-    private Point calculerPointQuatre(Point p1, Point p2, Point p3) {
-        double x4 = p1.getX() + p3.getX() - p2.getX();
-        double y4 = p1.getY() + p3.getY() - p2.getY();
-        return new Point(x4, y4);
     }
     public double longueur(){
         return p1.distance(p2);
