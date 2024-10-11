@@ -10,7 +10,7 @@ public class Main {
 
         System.out.println("TEST DE LA CLASSE : Triangle");
         Triangle t = new Triangle(p1, p2, p3);
-        System.out.println(t.getAire());
+        System.out.println("l'aire est de "+t.getAire()+". Le périmètre est de :"+t.getPerimetre());
 
         System.out.println("TEST DE LA CLASSE : Quadrilatere");
         Quadrilatere r4Points = new Quadrilatere(p1, p2, p3, p4);
