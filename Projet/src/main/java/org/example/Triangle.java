@@ -1,6 +1,6 @@
 package org.example;
 
-public class Triangle {
+public class Triangle implements CalculMethods{
     private Point p1;
     private Point p2;
     private Point p3;
@@ -11,7 +11,8 @@ public class Triangle {
         this.p3 = p3;
     }
 
-    public double surface() {
+    @Override
+    public double getAire() {
         double base = p1.distance(p2);
 
 
@@ -20,5 +21,10 @@ public class Triangle {
 
 
         return (base * hauteur) / 2;
+    }
+
+    @Override
+    public double getPerimetre() {
+        return 0;
     }
 }
