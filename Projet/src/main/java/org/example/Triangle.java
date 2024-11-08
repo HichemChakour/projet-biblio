@@ -22,11 +22,7 @@ public class Triangle implements ICalculMethods{
     @Override
     public double getAire(int arrondi) {
         double aire = this.getAire();
-        if (arrondi == 0) {
-            return aire;
-        } else {
             return Arrondi.arrondi(aire, arrondi);
-        }
     }
 
 
@@ -38,10 +34,7 @@ public class Triangle implements ICalculMethods{
     @Override
     public double getPerimetre(int arrondi) {
         double perimetre =this.getPerimetre();
-        if (arrondi == 0) {
-            return perimetre;
-        } else {
             return Arrondi.arrondi(perimetre, arrondi);
-        }
+
     }
 }
