@@ -34,11 +34,8 @@ public class Quadrilatere implements CalculMethods{
     @Override
     public double getAire(int arrondi) {
         double aire = this.getAire();
-        if (arrondi == 0) {
-            return aire;
-        } else {
             return arrondi(aire, arrondi);
-        }
+
     }
 
     // Méthode pour calculer le périmètre
@@ -51,10 +48,7 @@ public class Quadrilatere implements CalculMethods{
     @Override
     public double getPerimetre(int arrondi) {
         double perimetre = this.getPerimetre();
-        if (arrondi == 0) {
-            return perimetre;
-        } else {
             return arrondi(perimetre, arrondi);
-        }
+
     }
 }
