@@ -19,5 +19,8 @@ public class Main {
         System.out.println("TEST DE LA CLASSE : Cercle");
         Cercle c = new Cercle(p1, p4);
         System.out.println("l'aire est de "+c.getAire(100)+". Le périmètre est de :"+c.getPerimetre());
+
+        System.out.println("Test de la classe abstraite : arrondi");
+        System.out.println("Aire du cercle avant : "+c.getAire()+" après arrondi : "+c.getAire(1));
     }
 }
