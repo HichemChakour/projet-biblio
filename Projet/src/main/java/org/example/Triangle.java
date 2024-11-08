@@ -37,4 +37,14 @@ public class Triangle implements ICalculMethods{
             return Arrondi.arrondi(perimetre, arrondi);
 
     }
+
+    @Override
+    public boolean estInterieur(Point point) {
+        double aire1 = new Triangle(p1, p2, point).getAire();
+        double aire2 = new Triangle(p2, p3, point).getAire();
+        double aire3 = new Triangle(p3, p1, point).getAire();
+
+        double aireTotal = aire1 + aire2 + aire3;
+        return Math.abs(aireTotal - this.getAire()) < 1e-9;
+    }
 }

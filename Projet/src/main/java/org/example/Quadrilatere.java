@@ -51,4 +51,15 @@ public class Quadrilatere implements ICalculMethods{
             return arrondi(perimetre, arrondi);
 
     }
+
+    @Override
+    public boolean estInterieur(Point point) {
+        double aire1 = new Triangle(p1, p2, point).getAire();
+        double aire2 = new Triangle(p2, p3, point).getAire();
+        double aire3 = new Triangle(p3, p4, point).getAire();
+        double aire4 = new Triangle(p4, p1, point).getAire();
+
+        double aireTotal = aire1 + aire2 + aire3 + aire4;
+        return Math.abs(aireTotal - this.getAire()) < 1e-9;
+    }
 }

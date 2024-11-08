@@ -37,4 +37,10 @@ public class Cercle implements ICalculMethods{
         double aire = this.getAire();
             return arrondi(aire, arrondi);
     }
+
+    @Override
+    public boolean estInterieur(Point point) {
+        Point centre = new Point(0, 0);
+        return centre.distance(point) <= rayon;
+    }
 }
