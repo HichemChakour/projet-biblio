@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.Arrondi.arrondi;
+
 public class Cercle implements CalculMethods{
     private double rayon;
 
@@ -18,26 +20,28 @@ public class Cercle implements CalculMethods{
         return 2 * pi * rayon;
     }
 
-    double getPerimetre(int arrondi) {
-        double perimetre = 2 * pi * rayon;
+    @Override
+    public double getPerimetre(int arrondi) {
+        double perimetre = this.getPerimetre();
         if (arrondi == 0) {
             return perimetre;
         } else {
-            return (double) Math.round(perimetre * arrondi) / arrondi;
+            return arrondi(perimetre, arrondi);
         }
-
     }
+
     @Override
     public double getAire() {
         return pi * rayon * rayon;
     }
 
-    double getAire(int arrondi) {
-        double aire =pi * rayon * rayon;
+    @Override
+    public double getAire(int arrondi) {
+        double aire = this.getAire();
         if (arrondi == 0) {
             return aire;
         } else {
-            return (double) Math.round(aire * arrondi) / arrondi;
+            return arrondi(aire, arrondi);
         }
     }
 }

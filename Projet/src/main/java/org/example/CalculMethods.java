@@ -1,7 +1,9 @@
 package org.example;
 
 public interface CalculMethods {
-    public double getAire();
 
-    public double getPerimetre();
+    double getAire();
+    double getAire(int arrondi);
+    double getPerimetre();
+    double getPerimetre(int arrondi);
 }
