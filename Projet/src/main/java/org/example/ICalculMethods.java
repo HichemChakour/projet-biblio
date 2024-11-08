@@ -1,6 +1,6 @@
 package org.example;
 
-public interface CalculMethods {
+public interface ICalculMethods {
 
     double getAire();
     double getAire(int arrondi);

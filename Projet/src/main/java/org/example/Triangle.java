@@ -1,6 +1,6 @@
 package org.example;
 
-public class Triangle implements CalculMethods{
+public class Triangle implements ICalculMethods{
     private Point p1;
     private Point p2;
     private Point p3;

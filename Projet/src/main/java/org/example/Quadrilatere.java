@@ -2,7 +2,7 @@ package org.example;
 
 import static org.example.Arrondi.arrondi;
 
-public class Quadrilatere implements CalculMethods{
+public class Quadrilatere implements ICalculMethods{
 
     // Variables pour les côtés
     private Point p1;
