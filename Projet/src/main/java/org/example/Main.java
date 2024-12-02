@@ -1,8 +1,8 @@
 package org.example;
-
+import javax.swing.*;
 public class Main {
-    public static void main(String[] args) {
-        //Test des diverses classes
+    public static void main(String[] args)  {
+        /*Test des diverses classes
         Point p1 = new Point(0, 0);
         Point p2 = new Point(0, 2);
         Point p3 = new Point(2, 2);
@@ -21,6 +21,10 @@ public class Main {
         System.out.println("l'aire est de "+c.getAire(100)+". Le périmètre est de :"+c.getPerimetre());
 
         System.out.println("Test de la classe abstraite : arrondi");
-        System.out.println("Aire du cercle avant : "+c.getAire()+" après arrondi : "+c.getAire(1));
+        System.out.println("Aire du cercle avant : "+c.getAire()+" après arrondi : "+c.getAire(1));*/
+        SwingUtilities.invokeLater(() -> {
+            GeometryApp app = new GeometryApp();
+            app.setVisible(true);
+        });
     }
 }

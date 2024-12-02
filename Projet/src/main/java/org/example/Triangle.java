@@ -1,9 +1,9 @@
 package org.example;
 
 public class Triangle implements ICalculMethods{
-    private Point p1;
-    private Point p2;
-    private Point p3;
+    private final Point p1;
+    private final Point p2;
+    private final Point p3;
 
     public Triangle(Point p1, Point p2, Point p3) {
         this.p1 = p1;
@@ -36,5 +36,17 @@ public class Triangle implements ICalculMethods{
         double perimetre =this.getPerimetre();
             return Arrondi.arrondi(perimetre, arrondi);
 
+    }
+
+    public Point getP2() {
+        return p2;
+    }
+
+    public Point getP1() {
+        return p1;
+    }
+
+    public Point getP3() {
+        return p3;
     }
 }
