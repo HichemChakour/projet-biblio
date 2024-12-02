@@ -1,9 +1,9 @@
 package org.example;
 
 public class Triangle implements ICalculMethods{
-    private Point p1;
-    private Point p2;
-    private Point p3;
+    private final Point p1;
+    private final Point p2;
+    private final Point p3;
 
     public Triangle(Point p1, Point p2, Point p3) {
         this.p1 = p1;
@@ -38,13 +38,15 @@ public class Triangle implements ICalculMethods{
 
     }
 
-    @Override
-    public boolean estInterieur(Point point) {
-        double aire1 = new Triangle(p1, p2, point).getAire();
-        double aire2 = new Triangle(p2, p3, point).getAire();
-        double aire3 = new Triangle(p3, p1, point).getAire();
+    public Point getP2() {
+        return p2;
+    }
 
-        double aireTotal = aire1 + aire2 + aire3;
-        return Math.abs(aireTotal - this.getAire()) < 1e-9;
+    public Point getP1() {
+        return p1;
+    }
+
+    public Point getP3() {
+        return p3;
     }
 }

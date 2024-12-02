@@ -5,10 +5,10 @@ import static org.example.Arrondi.arrondi;
 public class Quadrilatere implements ICalculMethods{
 
     // Variables pour les côtés
-    private Point p1;
-    private Point p2;
-    private Point p3;
-    private Point p4;
+    private final Point p1;
+    private final Point p2;
+    private final Point p3;
+    private final Point p4;
 
     public Quadrilatere(Point p1, Point p2, Point p3, Point p4) {
         this.p1 = p1;
@@ -52,14 +52,19 @@ public class Quadrilatere implements ICalculMethods{
 
     }
 
-    @Override
-    public boolean estInterieur(Point point) {
-        double aire1 = new Triangle(p1, p2, point).getAire();
-        double aire2 = new Triangle(p2, p3, point).getAire();
-        double aire3 = new Triangle(p3, p4, point).getAire();
-        double aire4 = new Triangle(p4, p1, point).getAire();
+    public Point getP1() {
+        return p1;
+    }
 
-        double aireTotal = aire1 + aire2 + aire3 + aire4;
-        return Math.abs(aireTotal - this.getAire()) < 1e-9;
+    public Point getP2() {
+        return p2;
+    }
+
+    public Point getP3() {
+        return p3;
+    }
+
+    public Point getP4() {
+        return p4;
     }
 }
