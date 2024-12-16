@@ -67,4 +67,22 @@ public class Quadrilatere implements ICalculMethods{
     public Point getP4() {
         return p4;
     }
+
+    @Override
+    public boolean estInterieur(Point point) {
+        // Aire originale du quadrilatère
+        double aireOriginale = this.getAire();
+
+        // Aires des quatre sous-triangles
+        Triangle t1 = new Triangle(point, p1, p2);
+        Triangle t2 = new Triangle(point, p2, p3);
+        Triangle t3 = new Triangle(point, p3, p4);
+        Triangle t4 = new Triangle(point, p4, p1);
+
+        double aireTotale = t1.getAire() + t2.getAire() + t3.getAire() + t4.getAire();
+
+        // Vérification avec tolérance
+        return Math.abs(aireOriginale - aireTotale) < 1e-9;
+    }
+
 }

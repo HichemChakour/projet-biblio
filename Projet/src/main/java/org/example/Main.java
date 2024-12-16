@@ -31,9 +31,24 @@ public class Main {
 
         System.out.println("Test de la classe abstraite : arrondi");
         System.out.println("Aire du cercle avant : "+c.getAire()+" après arrondi : "+c.getAire(1));*/
+
         SwingUtilities.invokeLater(() -> {
             GeometryApp app = new GeometryApp();
             app.setVisible(true);
         });
+
+        /* Test Si est intérieur
+        Point pointTest = new Point(20, 3);
+
+        Cercle cercle = new Cercle(new Point(0, 0), new Point(0, 5));
+        System.out.println("Point dans le cercle : " + cercle.estInterieur(pointTest));
+
+        Triangle triangle = new Triangle(new Point(0, 0), new Point(5, 0), new Point(2, 5));
+        System.out.println("Point dans le triangle : " + triangle.estInterieur(pointTest));
+
+        Quadrilatere quadrilatere = new Quadrilatere(new Point(0, 0), new Point(5, 0), new Point(5, 5), new Point(0, 5));
+        System.out.println("Point dans le quadrilatère : " + quadrilatere.estInterieur(pointTest));
+
+         */
     }
 }

@@ -43,7 +43,8 @@ public class Cercle implements ICalculMethods{
 
     @Override
     public boolean estInterieur(Point point) {
-        Point centre = new Point(0, 0);
-        return centre.distance(point) <= rayon;
+        double distance = centre.distance(point); // Calcul de la distance entre le point et le centre
+        return distance <= rayon; // Vrai si la distance est inférieure ou égale au rayon
     }
+
 }
