@@ -49,4 +49,21 @@ public class Triangle implements ICalculMethods{
     public Point getP3() {
         return p3;
     }
+
+    @Override
+    public boolean estInterieur(Point point) {
+        // Aire originale
+        double aireOriginale = this.getAire();
+
+        // Aires des trois sous-triangles
+        Triangle t1 = new Triangle(point, p2, p3);
+        Triangle t2 = new Triangle(p1, point, p3);
+        Triangle t3 = new Triangle(p1, p2, point);
+
+        double aireTotale = t1.getAire() + t2.getAire() + t3.getAire();
+
+        // Vérification avec tolérance pour éviter les erreurs d'arrondi
+        return Math.abs(aireOriginale - aireTotale) < 1e-9;
+    }
+
 }
