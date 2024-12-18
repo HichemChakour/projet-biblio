@@ -73,5 +73,20 @@ public class Triangle implements ICalculMethods{
         p3.setX(p3.getX() + dx);
         p3.setY(p3.getY() + dy);
     }
+    public void rotate(Point center, double angle) {
+    double radians = Math.toRadians(angle);
+    rotatePoint(p1, center, radians);
+    rotatePoint(p2, center, radians);
+    rotatePoint(p3, center, radians);
+}
+
+private void rotatePoint(Point p, Point center, double radians) {
+    double dx = p.getX() - center.getX();
+    double dy = p.getY() - center.getY();
+    double newX = center.getX() + dx * Math.cos(radians) - dy * Math.sin(radians);
+    double newY = center.getY() + dx * Math.sin(radians) + dy * Math.cos(radians);
+    p.setX(newX);
+    p.setY(newY);
+}
 
 }

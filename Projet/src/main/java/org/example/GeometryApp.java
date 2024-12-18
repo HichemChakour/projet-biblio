@@ -18,6 +18,10 @@ public class GeometryApp extends JFrame {
     private final JTextField translationXField;
     private final JTextField translationYField;
     private final JButton translateButton;
+    private final JTextField rotationXField;
+    private final JTextField rotationYField;
+    private final JTextField rotationAngleField;
+    private final JButton rotateButton;
     private int cercleCount = 0;
     private int triangleCount = 0;
     private int quadrilatereCount = 0;
@@ -90,9 +94,16 @@ public class GeometryApp extends JFrame {
         figureSelection.addActionListener(e -> updateInputFields());
         drawButton.addActionListener(e -> drawFigure());
         figuresComboBox.addActionListener(e -> highlightSelectedFigure());
+
         translationXField = new JTextField(5);
         translationYField = new JTextField(5);
         translateButton = new JButton("Translater");
+
+        rotationXField = new JTextField(5);
+        rotationYField = new JTextField(5);
+        rotationAngleField = new JTextField(5);
+        rotateButton = new JButton("Tourner");
+
         updateInputFields();
         setVisible(true);
     }
@@ -163,6 +174,7 @@ public class GeometryApp extends JFrame {
 
         gbc.gridy++;
         menuPanel.add(figuresComboBox, gbc);
+
         gbc.gridx = 0;
         gbc.gridy++;
         menuPanel.add(new JLabel("Translation X :"), gbc);
@@ -180,6 +192,30 @@ public class GeometryApp extends JFrame {
         gbc.gridwidth = 2;
         menuPanel.add(translateButton, gbc);
         translateButton.addActionListener(e -> translateFigure());
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Rotation X :"), gbc);
+        gbc.gridx = 1;
+        menuPanel.add(rotationXField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Rotation Y :"), gbc);
+        gbc.gridx = 1;
+        menuPanel.add(rotationYField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Angle :"), gbc);
+        gbc.gridx = 1;
+        menuPanel.add(rotationAngleField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        menuPanel.add(rotateButton, gbc);
+        rotateButton.addActionListener(e -> rotateFigure());
 
         revalidate();
         repaint();
@@ -232,6 +268,7 @@ public class GeometryApp extends JFrame {
             dessinPanel.highlightFigure(figures.get(selectedIndex));
         }
     }
+
     private void translateFigure() {
         int selectedIndex = figuresComboBox.getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -251,6 +288,31 @@ public class GeometryApp extends JFrame {
                 dessinPanel.repaint();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Veuillez saisir des valeurs valides pour la translation.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void rotateFigure() {
+        int selectedIndex = figuresComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            try {
+                double x = Double.parseDouble(rotationXField.getText());
+                double y = Double.parseDouble(rotationYField.getText());
+                double angle = Double.parseDouble(rotationAngleField.getText());
+                Point center = new Point(x, y);
+                Object figure = figures.get(selectedIndex);
+
+                if (figure instanceof Cercle) {
+                    ((Cercle) figure).rotate(center, angle);
+                } else if (figure instanceof Triangle) {
+                    ((Triangle) figure).rotate(center, angle);
+                } else if (figure instanceof Quadrilatere) {
+                    ((Quadrilatere) figure).rotate(center, angle);
+                }
+
+                dessinPanel.repaint();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir des valeurs valides pour la rotation.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

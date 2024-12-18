@@ -51,4 +51,13 @@ public class Cercle implements ICalculMethods{
         centre.setX(centre.getX() + dx);
         centre.setY(centre.getY() + dy);
     }
+    public void rotate(Point center, double angle) {
+    double radians = Math.toRadians(angle);
+    double dx = centre.getX() - center.getX();
+    double dy = centre.getY() - center.getY();
+    double newX = center.getX() + dx * Math.cos(radians) - dy * Math.sin(radians);
+    double newY = center.getY() + dx * Math.sin(radians) + dy * Math.cos(radians);
+    centre.setX(newX);
+    centre.setY(newY);
+}
 }
