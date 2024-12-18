@@ -85,4 +85,15 @@ public class Quadrilatere implements ICalculMethods{
         return Math.abs(aireOriginale - aireTotale) < 1e-9;
     }
 
+    public void translate(double dx, double dy) {
+        p1.setX(p1.getX() + dx);
+        p1.setY(p1.getY() + dy);
+        p2.setX(p2.getX() + dx);
+        p2.setY(p2.getY() + dy);
+        p3.setX(p3.getX() + dx);
+        p3.setY(p3.getY() + dy);
+        p4.setX(p4.getX() + dx);
+        p4.setY(p4.getY() + dy);
+    }
+
 }

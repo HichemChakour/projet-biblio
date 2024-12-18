@@ -15,6 +15,9 @@ public class GeometryApp extends JFrame {
     private final JTextField radiusField;
     private final List<Object> figures;
     private final JComboBox<String> figuresComboBox;
+    private final JTextField translationXField;
+    private final JTextField translationYField;
+    private final JButton translateButton;
     private int cercleCount = 0;
     private int triangleCount = 0;
     private int quadrilatereCount = 0;
@@ -78,7 +81,9 @@ public class GeometryApp extends JFrame {
         figureSelection.addActionListener(e -> updateInputFields());
         drawButton.addActionListener(e -> drawFigure());
         figuresComboBox.addActionListener(e -> highlightSelectedFigure());
-
+        translationXField = new JTextField(5);
+        translationYField = new JTextField(5);
+        translateButton = new JButton("Translater");
         updateInputFields();
         setVisible(true);
     }
@@ -149,6 +154,23 @@ public class GeometryApp extends JFrame {
 
         gbc.gridy++;
         menuPanel.add(figuresComboBox, gbc);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Translation X :"), gbc);
+        gbc.gridx = 1;
+        menuPanel.add(translationXField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Translation Y :"), gbc);
+        gbc.gridx = 1;
+        menuPanel.add(translationYField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        menuPanel.add(translateButton, gbc);
+        translateButton.addActionListener(e -> translateFigure());
 
         revalidate();
         repaint();
@@ -199,6 +221,28 @@ public class GeometryApp extends JFrame {
         int selectedIndex = figuresComboBox.getSelectedIndex();
         if (selectedIndex >= 0) {
             dessinPanel.highlightFigure(figures.get(selectedIndex));
+        }
+    }
+    private void translateFigure() {
+        int selectedIndex = figuresComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            try {
+                double dx = Double.parseDouble(translationXField.getText());
+                double dy = Double.parseDouble(translationYField.getText());
+                Object figure = figures.get(selectedIndex);
+
+                if (figure instanceof Cercle) {
+                    ((Cercle) figure).translate(dx, dy);
+                } else if (figure instanceof Triangle) {
+                    ((Triangle) figure).translate(dx, dy);
+                } else if (figure instanceof Quadrilatere) {
+                    ((Quadrilatere) figure).translate(dx, dy);
+                }
+
+                dessinPanel.repaint();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Veuillez saisir des valeurs valides pour la translation.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
