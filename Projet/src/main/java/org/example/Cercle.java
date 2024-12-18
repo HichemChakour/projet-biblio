@@ -47,4 +47,8 @@ public class Cercle implements ICalculMethods{
         return distance <= rayon; // Vrai si la distance est inférieure ou égale au rayon
     }
 
+    public void translate(double dx, double dy) {
+        centre.setX(centre.getX() + dx);
+        centre.setY(centre.getY() + dy);
+    }
 }

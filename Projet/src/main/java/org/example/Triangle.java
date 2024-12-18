@@ -65,5 +65,13 @@ public class Triangle implements ICalculMethods{
         // Vérification avec tolérance pour éviter les erreurs d'arrondi
         return Math.abs(aireOriginale - aireTotale) < 1e-9;
     }
+    public void translate(double dx, double dy) {
+        p1.setX(p1.getX() + dx);
+        p1.setY(p1.getY() + dy);
+        p2.setX(p2.getX() + dx);
+        p2.setY(p2.getY() + dy);
+        p3.setX(p3.getX() + dx);
+        p3.setY(p3.getY() + dy);
+    }
 
 }
