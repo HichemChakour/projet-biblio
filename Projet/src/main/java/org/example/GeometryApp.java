@@ -23,8 +23,15 @@ public class GeometryApp extends JFrame {
     private int quadrilatereCount = 0;
 
     public GeometryApp() {
-        setTitle("Plan 2D Géométrique");
-        setSize(1200, 800);
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        setTitle("Geometry DashBoard");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -33,10 +40,12 @@ public class GeometryApp extends JFrame {
 
         dessinPanel = new DessinPanel();
         add(dessinPanel, BorderLayout.CENTER);
+        dessinPanel.setBackground(new Color(240, 240, 240));
 
         menuPanel = new JPanel();
         menuPanel.setLayout(new GridBagLayout());
         menuPanel.setBorder(new TitledBorder("Options de Dessin"));
+        menuPanel.setBackground(new Color(208,208,208));
         add(menuPanel, BorderLayout.WEST);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -45,7 +54,7 @@ public class GeometryApp extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        menuPanel.add(new JLabel("Choisissez une figure :"), gbc);
+        menuPanel.add(new JLabel("Figure :"), gbc);
 
         figureSelection = new JComboBox<>(new String[]{"Cercle", "Triangle", "Quadrilatere"});
         gbc.gridx = 1;
