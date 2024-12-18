@@ -10,9 +10,14 @@ public class GeometryApp extends JFrame {
     private final DessinPanel dessinPanel;
     private final JPanel menuPanel;
     private final JComboBox<String> figureSelection;
-    private final List<JLabel> pointLabels; // Liste des labels dynamiques
-    private final List<JTextField> pointFields; // Liste des champs dynamiques
-    private final JTextField radiusField; // Champ pour le rayon
+    private final List<JLabel> pointLabels;
+    private final List<JTextField> pointFields;
+    private final JTextField radiusField;
+    private final List<Object> figures;
+    private final JComboBox<String> figuresComboBox;
+    private int cercleCount = 0;
+    private int triangleCount = 0;
+    private int quadrilatereCount = 0;
 
     public GeometryApp() {
         setTitle("Plan 2D Géométrique");
@@ -20,11 +25,12 @@ public class GeometryApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Panneau de dessin
+        figures = new ArrayList<>();
+        figuresComboBox = new JComboBox<>();
+
         dessinPanel = new DessinPanel();
         add(dessinPanel, BorderLayout.CENTER);
 
-        // Panneau de menu avec bordure
         menuPanel = new JPanel();
         menuPanel.setLayout(new GridBagLayout());
         menuPanel.setBorder(new TitledBorder("Options de Dessin"));
@@ -34,7 +40,6 @@ public class GeometryApp extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Menu déroulant pour choisir la figure
         gbc.gridx = 0;
         gbc.gridy = 0;
         menuPanel.add(new JLabel("Choisissez une figure :"), gbc);
@@ -43,7 +48,6 @@ public class GeometryApp extends JFrame {
         gbc.gridx = 1;
         menuPanel.add(figureSelection, gbc);
 
-        // Initialiser les champs et labels dynamiques
         pointLabels = new ArrayList<>();
         pointFields = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
@@ -51,7 +55,6 @@ public class GeometryApp extends JFrame {
             pointFields.add(new JTextField(5));
         }
 
-        // Champ pour le rayon
         gbc.gridx = 0;
         gbc.gridy++;
         gbc.gridwidth = 2;
@@ -62,40 +65,42 @@ public class GeometryApp extends JFrame {
         menuPanel.add(radiusField, gbc);
         radiusField.setVisible(false);
 
-        // Bouton pour dessiner
         gbc.gridy++;
         JButton drawButton = new JButton("Dessiner");
         menuPanel.add(drawButton, gbc);
 
-        // Actions dynamiques
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Figures créées :"), gbc);
+
+        gbc.gridy++;
+        menuPanel.add(figuresComboBox, gbc);
+
         figureSelection.addActionListener(e -> updateInputFields());
         drawButton.addActionListener(e -> drawFigure());
+        figuresComboBox.addActionListener(e -> highlightSelectedFigure());
 
-        updateInputFields(); // Affichage initial
+        updateInputFields();
         setVisible(true);
     }
 
     private void updateInputFields() {
         String selected = (String) figureSelection.getSelectedItem();
 
-        // Nettoyer le menu
         menuPanel.removeAll();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Ajouter le menu déroulant
         gbc.gridx = 0;
         gbc.gridy = 0;
         menuPanel.add(new JLabel("Choisissez une figure :"), gbc);
         gbc.gridx = 1;
         menuPanel.add(figureSelection, gbc);
 
-        // Ajouter les champs selon la figure sélectionnée
         int nbPoints = 0;
 
         if ("Cercle".equals(selected)) {
-            nbPoints = 1; // Cercle a besoin d'un point + rayon
+            nbPoints = 1;
 
             gbc.gridx = 0;
             gbc.gridy++;
@@ -104,12 +109,11 @@ public class GeometryApp extends JFrame {
             menuPanel.add(radiusField, gbc);
             radiusField.setVisible(true);
         } else if ("Triangle".equals(selected)) {
-            nbPoints = 3; // Triangle : 3 points
+            nbPoints = 3;
         } else if ("Quadrilatere".equals(selected)) {
-            nbPoints = 4; // Quadrilatère : 4 points
+            nbPoints = 4;
         }
 
-        // Ajouter dynamiquement les labels et champs pour x et y
         for (int i = 0; i < nbPoints; i++) {
             gbc.gridx = 0;
             gbc.gridy++;
@@ -128,7 +132,6 @@ public class GeometryApp extends JFrame {
             menuPanel.add(pointFields.get(i * 2 + 1), gbc);
         }
 
-        // Bouton pour dessiner
         gbc.gridx = 0;
         gbc.gridy++;
         gbc.gridwidth = 2;
@@ -136,19 +139,25 @@ public class GeometryApp extends JFrame {
         menuPanel.add(drawButton, gbc);
         drawButton.addActionListener(e -> drawFigure());
 
-        // Bouton pour tout effacer
         gbc.gridy++;
         JButton clearButton = new JButton("Tout effacer");
         menuPanel.add(clearButton, gbc);
         clearButton.addActionListener(e -> clearFigures());
 
+        gbc.gridy++;
+        menuPanel.add(new JLabel("Figures créées :"), gbc);
+
+        gbc.gridy++;
+        menuPanel.add(figuresComboBox, gbc);
 
         revalidate();
         repaint();
     }
 
     private void clearFigures() {
-        dessinPanel.effacerToutesFigures(); // Appel de la méthode pour effacer les figures
+        dessinPanel.effacerToutesFigures();
+        figures.clear();
+        figuresComboBox.removeAllItems();
     }
 
     private void drawFigure() {
@@ -160,12 +169,16 @@ public class GeometryApp extends JFrame {
                 double y = Double.parseDouble(pointFields.get(1).getText());
                 double rayon = Double.parseDouble(radiusField.getText());
                 Cercle cercle = new Cercle(new Point(x, y), new Point(x + rayon, y));
+                figures.add(cercle);
+                figuresComboBox.addItem("Cercle" + (++cercleCount));
                 dessinPanel.ajouterCercle(cercle);
             } else if ("Triangle".equals(selected)) {
                 Point p1 = new Point(Double.parseDouble(pointFields.get(0).getText()), Double.parseDouble(pointFields.get(1).getText()));
                 Point p2 = new Point(Double.parseDouble(pointFields.get(2).getText()), Double.parseDouble(pointFields.get(3).getText()));
                 Point p3 = new Point(Double.parseDouble(pointFields.get(4).getText()), Double.parseDouble(pointFields.get(5).getText()));
                 Triangle triangle = new Triangle(p1, p2, p3);
+                figures.add(triangle);
+                figuresComboBox.addItem("Triangle" + (++triangleCount));
                 dessinPanel.ajouterTriangle(triangle);
             } else if ("Quadrilatere".equals(selected)) {
                 Point p1 = new Point(Double.parseDouble(pointFields.get(0).getText()), Double.parseDouble(pointFields.get(1).getText()));
@@ -173,6 +186,8 @@ public class GeometryApp extends JFrame {
                 Point p3 = new Point(Double.parseDouble(pointFields.get(4).getText()), Double.parseDouble(pointFields.get(5).getText()));
                 Point p4 = new Point(Double.parseDouble(pointFields.get(6).getText()), Double.parseDouble(pointFields.get(7).getText()));
                 Quadrilatere quadrilatere = new Quadrilatere(p1, p2, p3, p4);
+                figures.add(quadrilatere);
+                figuresComboBox.addItem("Quadrilatere" + (++quadrilatereCount));
                 dessinPanel.ajouterQuadrilatere(quadrilatere);
             }
         } catch (NumberFormatException ex) {
@@ -180,4 +195,10 @@ public class GeometryApp extends JFrame {
         }
     }
 
+    private void highlightSelectedFigure() {
+        int selectedIndex = figuresComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            dessinPanel.highlightFigure(figures.get(selectedIndex));
+        }
+    }
 }

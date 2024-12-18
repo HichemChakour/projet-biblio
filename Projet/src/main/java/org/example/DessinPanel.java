@@ -1,3 +1,4 @@
+
 package org.example;
 
 import javax.swing.*;
@@ -10,6 +11,8 @@ public class DessinPanel extends JPanel {
     private final List<Cercle> cercles;
     private final List<Quadrilatere> quadrilateres;
     private final List<Triangle> triangles;
+    private Object highlightedFigure;
+
     public DessinPanel() {
         this.lignes = new ArrayList<>();
         this.cercles = new ArrayList<>();
@@ -31,6 +34,7 @@ public class DessinPanel extends JPanel {
         triangles.add(triangle);
         repaint(); // Redessine le panel
     }
+
     public void ajouterQuadrilatere(Quadrilatere quadrilatere) {
         quadrilateres.add(quadrilatere);
         repaint(); // Redessine le panel
@@ -41,7 +45,13 @@ public class DessinPanel extends JPanel {
         cercles.clear();
         triangles.clear();
         quadrilateres.clear();
+        highlightedFigure = null;
         repaint(); // Redessine le panel pour le vider
+    }
+
+    public void highlightFigure(Object figure) {
+        highlightedFigure = figure;
+        repaint();
     }
 
     @Override
@@ -73,10 +83,13 @@ public class DessinPanel extends JPanel {
             if (y != 0) g2.drawString(String.valueOf(-y), 8, y + 5);
         }
 
-        g2.setColor(Color.BLACK); // Revenir à la couleur par défaut pour les figures
-
         // Ajuster les coordonnées des figures par rapport au nouveau repère centré
         for (Ligne ligne : lignes) {
+            if (ligne == highlightedFigure) {
+                g2.setColor(Color.BLUE);
+            } else {
+                g2.setColor(Color.BLACK);
+            }
             g2.drawLine(
                     (int) ligne.start.getX(), (int) -ligne.start.getY(),
                     (int) ligne.end.getX(), (int) -ligne.end.getY()
@@ -84,12 +97,22 @@ public class DessinPanel extends JPanel {
         }
 
         for (Cercle cercle : cercles) {
+            if (cercle == highlightedFigure) {
+                g2.setColor(Color.BLUE);
+            } else {
+                g2.setColor(Color.BLACK);
+            }
             int x = (int) (cercle.getCentre().getX() - cercle.getRayon());
             int y = (int) -(cercle.getCentre().getY() + cercle.getRayon());
             g2.drawOval(x, y, (int) (cercle.getRayon() * 2), (int) (cercle.getRayon() * 2));
         }
 
         for (Triangle triangle : triangles) {
+            if (triangle == highlightedFigure) {
+                g2.setColor(Color.BLUE);
+            } else {
+                g2.setColor(Color.BLACK);
+            }
             g2.drawLine(
                     (int) triangle.getP1().getX(), (int) -triangle.getP1().getY(),
                     (int) triangle.getP2().getX(), (int) -triangle.getP2().getY()
@@ -105,6 +128,11 @@ public class DessinPanel extends JPanel {
         }
 
         for (Quadrilatere quadrilatere : quadrilateres) {
+            if (quadrilatere == highlightedFigure) {
+                g2.setColor(Color.BLUE);
+            } else {
+                g2.setColor(Color.BLACK);
+            }
             g2.drawLine(
                     (int) quadrilatere.getP1().getX(), (int) -quadrilatere.getP1().getY(),
                     (int) quadrilatere.getP2().getX(), (int) -quadrilatere.getP2().getY()
