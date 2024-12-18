@@ -25,6 +25,14 @@ public class GeometryApp extends JFrame {
     private int cercleCount = 0;
     private int triangleCount = 0;
     private int quadrilatereCount = 0;
+    private final JLabel figcreesLabel;
+    private final JLabel transXLabel;
+    private final JLabel transyLabel;
+    private final JLabel rotXLabel;
+    private final JLabel rotYLabel;
+    private final JLabel angleLabel;
+
+
 
     public GeometryApp() {
         try {
@@ -104,9 +112,18 @@ public class GeometryApp extends JFrame {
         rotationAngleField = new JTextField(5);
         rotateButton = new JButton("Tourner");
 
+        figcreesLabel = new JLabel("Figures créées :");
+        transXLabel = new JLabel("Translation X :");
+        transyLabel = new JLabel("Translation Y :");
+        rotXLabel = new JLabel("Rotation X :");
+        rotYLabel = new JLabel("Rotation y :");
+        angleLabel = new JLabel("Angle :");
+
         updateInputFields();
+        updateFigureOptionsVisibility();
         setVisible(true);
     }
+
 
     private void updateInputFields() {
         String selected = (String) figureSelection.getSelectedItem();
@@ -115,7 +132,6 @@ public class GeometryApp extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         menuPanel.add(new JLabel("Choisissez une figure :"), gbc);
@@ -169,54 +185,54 @@ public class GeometryApp extends JFrame {
         menuPanel.add(clearButton, gbc);
         clearButton.addActionListener(e -> clearFigures());
 
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Figures créées :"), gbc);
 
-        gbc.gridy++;
-        menuPanel.add(figuresComboBox, gbc);
+            gbc.gridy++;
+            menuPanel.add(figcreesLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Translation X :"), gbc);
-        gbc.gridx = 1;
-        menuPanel.add(translationXField, gbc);
+            gbc.gridy++;
+            menuPanel.add(figuresComboBox, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Translation Y :"), gbc);
-        gbc.gridx = 1;
-        menuPanel.add(translationYField, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            menuPanel.add(transXLabel, gbc);
+            gbc.gridx = 1;
+            menuPanel.add(translationXField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        menuPanel.add(translateButton, gbc);
-        translateButton.addActionListener(e -> translateFigure());
+            gbc.gridx = 0;
+            gbc.gridy++;
+            menuPanel.add(transyLabel, gbc);
+            gbc.gridx = 1;
+            menuPanel.add(translationYField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Rotation X :"), gbc);
-        gbc.gridx = 1;
-        menuPanel.add(rotationXField, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            gbc.gridwidth = 2;
+            menuPanel.add(translateButton, gbc);
+            translateButton.addActionListener(e -> translateFigure());
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Rotation Y :"), gbc);
-        gbc.gridx = 1;
-        menuPanel.add(rotationYField, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            menuPanel.add(rotXLabel, gbc);
+            gbc.gridx = 1;
+            menuPanel.add(rotationXField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        menuPanel.add(new JLabel("Angle :"), gbc);
-        gbc.gridx = 1;
-        menuPanel.add(rotationAngleField, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            menuPanel.add(rotYLabel, gbc);
+            gbc.gridx = 1;
+            menuPanel.add(rotationYField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        menuPanel.add(rotateButton, gbc);
-        rotateButton.addActionListener(e -> rotateFigure());
+            gbc.gridx = 0;
+            gbc.gridy++;
+            menuPanel.add(angleLabel, gbc);
+            gbc.gridx = 1;
+            menuPanel.add(rotationAngleField, gbc);
 
+            gbc.gridx = 0;
+            gbc.gridy++;
+            gbc.gridwidth = 2;
+            menuPanel.add(rotateButton, gbc);
+            rotateButton.addActionListener(e -> rotateFigure());
         revalidate();
         repaint();
     }
@@ -225,6 +241,7 @@ public class GeometryApp extends JFrame {
         dessinPanel.effacerToutesFigures();
         figures.clear();
         figuresComboBox.removeAllItems();
+        updateFigureOptionsVisibility();
     }
 
     private void drawFigure() {
@@ -238,6 +255,7 @@ public class GeometryApp extends JFrame {
                 Cercle cercle = new Cercle(new Point(x, y), new Point(x + rayon, y));
                 figures.add(cercle);
                 figuresComboBox.addItem("Cercle" + (++cercleCount));
+                updateFigureOptionsVisibility();
                 dessinPanel.ajouterCercle(cercle);
             } else if ("Triangle".equals(selected)) {
                 Point p1 = new Point(Double.parseDouble(pointFields.get(0).getText()), Double.parseDouble(pointFields.get(1).getText()));
@@ -246,6 +264,7 @@ public class GeometryApp extends JFrame {
                 Triangle triangle = new Triangle(p1, p2, p3);
                 figures.add(triangle);
                 figuresComboBox.addItem("Triangle" + (++triangleCount));
+                updateFigureOptionsVisibility();
                 dessinPanel.ajouterTriangle(triangle);
             } else if ("Quadrilatere".equals(selected)) {
                 Point p1 = new Point(Double.parseDouble(pointFields.get(0).getText()), Double.parseDouble(pointFields.get(1).getText()));
@@ -255,6 +274,7 @@ public class GeometryApp extends JFrame {
                 Quadrilatere quadrilatere = new Quadrilatere(p1, p2, p3, p4);
                 figures.add(quadrilatere);
                 figuresComboBox.addItem("Quadrilatere" + (++quadrilatereCount));
+                updateFigureOptionsVisibility();
                 dessinPanel.ajouterQuadrilatere(quadrilatere);
             }
         } catch (NumberFormatException ex) {
@@ -315,5 +335,27 @@ public class GeometryApp extends JFrame {
                 JOptionPane.showMessageDialog(this, "Veuillez saisir des valeurs valides pour la rotation.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void updateFigureOptionsVisibility() {
+        boolean hasFigures = !figures.isEmpty();
+        figuresComboBox.setVisible(hasFigures);
+        figcreesLabel.setVisible(hasFigures);
+        transXLabel.setVisible(hasFigures);
+        transyLabel.setVisible(hasFigures);
+        rotXLabel.setVisible(hasFigures);
+        rotYLabel.setVisible(hasFigures);
+        angleLabel.setVisible(hasFigures);
+        translationXField.setVisible(hasFigures);
+        translationYField.setVisible(hasFigures);
+        translateButton.setVisible(hasFigures);
+        rotationXField.setVisible(hasFigures);
+        rotationYField.setVisible(hasFigures);
+        rotationAngleField.setVisible(hasFigures);
+        rotateButton.setVisible(hasFigures);
+
+        // Mettre à jour le layout pour refléter les changements
+        revalidate();
+        repaint();
     }
 }
